@@ -5,7 +5,7 @@ HOST="127.0.0.1"
 PORT="18230"
 
 # 超时时间（秒）
-TIMEOUT=360
+TIMEOUT=86400
 
 # 定义计数器文件路径
 COUNT_FILE="/tmp/connection_fail_count.txt"
@@ -30,8 +30,8 @@ else
     echo "$fail_count" > "$COUNT_FILE"
 
     # 如果连续2次失败，重启服务
-    if [ "$fail_count" -ge 2 ]; then
-        echo "连续2次连接失败，重启qbittorrent-nox@ekinsun服务..."
+    if [ "$fail_count" -ge 5 ]; then
+        echo "连续5次连接失败，重启qbittorrent-nox服务..."
         sudo systemctl restart qbittorrent-nox@felens
         # 重置失败计数为0
         echo 0 > "$COUNT_FILE"
